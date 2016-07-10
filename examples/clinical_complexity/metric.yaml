@@ -1,0 +1,8 @@
+title: 'clincompl'
+description: 'Clinical complexity experiment'
+metric:
+  - name: 'VP Shunt'
+    description: 'some kind of tube?'
+    options:
+      - 'yes'
+      - 'no'
