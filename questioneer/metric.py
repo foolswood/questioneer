@@ -38,16 +38,16 @@ _form_template = '''
 
 class Metric:
     def __init__(self, questions):
-        self._questions = tuple(questions)
+        self.questions = tuple(questions)
 
     @property
     def form_elements(self):
         return _form_template.format(
             question_elements='\n'.join(
-                q.form_element for q in self._questions))
+                q.form_element for q in self.questions))
 
     def validate(self, response):
-        validator_map = {q.var: q.validate for q in self._questions}
+        validator_map = {q.var: q.validate for q in self.questions}
         validated = {}
         for k, v in response.items():
             validated[k] = validator_map.pop(k)(v)

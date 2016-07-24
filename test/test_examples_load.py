@@ -25,7 +25,7 @@ def _check_valid_html(text):
     (join(_examples_path, e) for e in listdir(_examples_path)))
 def test_example_loads(example_path):
     storage = InMemory()
-    survey = survey_from_path(example_path, storage)
+    metric, survey = survey_from_path(example_path, storage)
     index_text = loop.run_until_complete(survey.get_index(lambda _: ''))
     _check_valid_html(index_text)
     item_text = loop.run_until_complete(survey.get_item('someone'))

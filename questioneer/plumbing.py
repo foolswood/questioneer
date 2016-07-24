@@ -7,7 +7,7 @@ import yaml
 
 def survey_from_config(config, items_path, storage):
     metric = from_description(config['metric'])
-    return InterRater(
+    return metric, InterRater(
         config['title'], config['description'], metric, items_path,
         storage)
 
