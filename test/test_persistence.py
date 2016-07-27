@@ -8,7 +8,9 @@ from questioneer.metric import Metric, Choice
 
 loop = get_event_loop()
 
-choice = Choice('c', 'which is food', ('chalk', 'cheese'))
+choice = Choice('c', (
+    {'name': 'chalk', 'description': 'Soft rock'},
+    {'name': 'cheese', 'description': 'Stilton'}))
 metric = Metric([choice])
 
 

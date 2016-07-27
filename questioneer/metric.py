@@ -11,11 +11,14 @@ _select_template = '''
 
 
 class Choice:
-    def __init__(self, name, description, options):
+    def __init__(self, name, options):
         self.name = name
         self.var = name.replace(' ', '_').lower()
-        self.description = description
-        self.options = Enum(self.var.capitalize() + 'Options', options)
+        self.options = Enum(
+            self.var.capitalize() + 'Options',
+            tuple(o['name'] for o in options))
+        self._option_descriptions = {
+            self.options[o['name']]: o['description'] for o in options}
 
     def validate(self, response):
         return self.options[response]
@@ -25,8 +28,9 @@ class Choice:
         # FIXME: use proper templating
         return _select_template.format(
             name=self.name, var=self.var, options=''.join(
-                '<option value="{o}">{o}</option>'.format(o=o.name) for
-                o in self.options))
+                '<option value="{val}">{desc}</option>'.format(
+                    val=o.name, desc=self._option_descriptions[o]) for o in
+                    self.options))
 
 
 _form_template = '''
