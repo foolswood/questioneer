@@ -4,7 +4,7 @@ metric:
   - name: 'Respiratory'
     options:
       - name: 'none'
-        description: 'None'
+        description: 'None of these'
       - name: 'infections'
         description: 'Frequent or increasing lower respiratory infections'
       - name: 'picu'
@@ -16,7 +16,7 @@ metric:
   - name: 'Feeding'
     options:
       - name: 'none'
-        description: 'None'
+        description: 'None of these'
       - name: 'gastrostomy'
         description: 'Gastrostomy/long term NG feeding (>6 months)'
       - name: 'jejunostomy'
@@ -28,7 +28,7 @@ metric:
   - name: 'Locomotor'
     options:
       - name: 'none'
-        description: 'None'
+        description: 'None of these'
       - name: 'quadriplegia'
         description: 'Whole body movement disorder/quadriplegia/myopathy'
       - name: 'scoliosis'
@@ -40,7 +40,7 @@ metric:
   - name: 'Seizures'
     options:
       - name: 'none'
-        description: 'None'
+        description: 'None of these'
       - name: 'meds'
         description: 'Epilepsy requiring medication'
       - name: 'threemeds'
@@ -52,7 +52,7 @@ metric:
   - name: 'Other interventions'
     options:
       - name: 'none'
-        description: 'None'
+        description: 'None of these'
       - name: 'stoma'
         description: 'Stoma/Insulin or clotting factor dependent'
       - name: 'indwell'
