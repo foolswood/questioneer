@@ -1,5 +1,5 @@
 title: 'Clinical Complexity'
-description: 'Clinical complexity experiment'
+description: 'A survey to determine the inter-rater reliability of a proposed metric for clinical complexity.'
 metric:
   - name: 'Respiratory'
     options:

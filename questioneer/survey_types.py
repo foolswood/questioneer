@@ -25,6 +25,7 @@ index_body_template = '''
 <h2>How this survey tool works</h2>
 <p>
 You can score as many reports as you want to.
+Do take part even if you only have time to score one report, but the more you score the better.
 You don't have to be score all the reports you want to do in one sitting.
 If you do some items now and want to do more later the survey can be resumed.
 It won't "time out" on you and can be resumed from a different computer.
