@@ -3,8 +3,8 @@ from enum import Enum
 
 _select_template = '''
 <div>
-{name}: <select name="{var}">
-<option disabled selected></option>
+{name}: <select name="{var}" required>
+<option value="" disabled selected></option>
 {options}
 </select>
 </div>'''
