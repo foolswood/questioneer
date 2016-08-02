@@ -47,6 +47,18 @@ question_body_template = '''
 {form}
 </div>'''
 
+table_template = '''
+<table>
+<thead>
+<tr>
+{headings}
+</tr>
+</thead>
+<tbody>
+{rows}
+</tbody>
+</table>'''
+
 
 class InterRater:
     def __init__(self, title, description, metric, items_dir, persistence):
@@ -107,3 +119,10 @@ class InterRater:
             raise KeyError('ought to have one')
         yield from self._persistence.store_response(
             participant_id, active_id, self._metric.validate(data))
+
+    @coroutine
+    def get_raw_results(self):
+        columns, records = yield from self._persistence.get_raw_results()
+        headings = ' '.join('<th>{}</th>'.format(c) for c in columns)
+        body = '\n</tr>\n<tr>\n'.join(' '.join('<td>{}</td>'.format(d) for d in record) for record in records)
+        return table_template.format(headings=headings, rows='<tr>\n{}\n</tr>'.format(body))

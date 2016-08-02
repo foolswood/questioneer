@@ -107,3 +107,11 @@ class SqlLite:
             row = c.fetchone()
             if row:
                 return row[0]
+
+    @coroutine
+    def get_raw_results(self):
+        cols = tuple(self.schema['responses']['columns'])
+        with self._transaction() as c:
+            c.execute('SELECT {} from responses;'.format(', '.join(cols)))
+            records = c.fetchall()
+        return cols, records

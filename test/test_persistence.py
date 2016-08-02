@@ -64,3 +64,5 @@ def test_response_storage(storage_cm):
         answered = loop.run_until_complete(
             storage.get_answered_item_ids(participant_id))
         assert answered == frozenset({aiid, aiid2})
+        columns, records = loop.run_until_complete(storage.get_raw_results())
+        assert set(columns) == set(('participant_id', 'active_item_id', 'c'))

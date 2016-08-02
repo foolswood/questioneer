@@ -10,7 +10,8 @@ class Surveyor:
         self.routes = (
             ('GET', '/', self._get_index),
             ('GET', '/item', self._get_item),
-            ('POST', '/item', self._post_response))
+            ('POST', '/item', self._post_response),
+            ('GET', '/results/raw', self._get_raw_results))
 
     def _get_participant_url(self, participant_id):
         return '/item?' + urlencode(
@@ -40,6 +41,11 @@ class Surveyor:
         yield from self._survey.store_response(participant_id, data)
         body = yield from self._survey.get_item(participant_id)
         return web.Response(status=201, body=body.encode('utf-8'))
+
+    @asyncio.coroutine
+    def _get_raw_results(self, request):
+        body = yield from self._survey.get_raw_results()
+        return web.Response(body=body.encode('utf-8'))
 
 
 def run(survey):

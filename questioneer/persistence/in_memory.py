@@ -1,5 +1,5 @@
 from asyncio import coroutine
-from collections import defaultdict
+from collections import defaultdict, ChainMap
 
 
 class InMemory:
@@ -27,3 +27,16 @@ class InMemory:
     @coroutine
     def get_answered_item_ids(self, participant_id):
         return frozenset(self._stored_responses[participant_id].keys())
+
+    @coroutine
+    def get_raw_results(self):
+        columns = []
+        response_cols = []
+        for p, responses in self._stored_responses.items():
+            for i, response in responses.items():
+                response = ChainMap(
+                    response, {'participant_id': p, 'active_item_id': i})
+                if not columns:
+                    columns.extend(response.keys())
+                response_cols.append([response[c] for c in columns])
+        return columns, response_cols
