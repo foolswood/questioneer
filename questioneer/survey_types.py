@@ -116,7 +116,7 @@ class InterRater:
         active_id = yield from self._persistence.get_active_item_id(
             participant_id)
         if active_id is None:
-            raise KeyError('ought to have one')
+            raise KeyError('No active response for {}'.format(participant_id))
         yield from self._persistence.store_response(
             participant_id, active_id, self._metric.validate(data))
 
