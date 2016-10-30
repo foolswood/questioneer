@@ -17,10 +17,15 @@ class Surveyor:
         return '/item?' + urlencode(
             {'participant_id': participant_id})
 
+    @staticmethod
+    def _html_response(body, status=200):
+        return web.Response(
+            status=status, body=body.encode('utf-8'), content_type='text/html')
+
     @asyncio.coroutine
     def _get_index(self, request):
         body = yield from self._survey.get_index(self._get_participant_url)
-        return web.Response(body=body.encode('utf-8'))
+        return self._html_response(body)
 
     @staticmethod
     def _extract_participant_id(request):
@@ -32,7 +37,7 @@ class Surveyor:
     def _get_item(self, request):
         participant_id = self._extract_participant_id(request)
         body = yield from self._survey.get_item(participant_id)
-        return web.Response(body=body.encode('utf-8'))
+        return self._html_response(body)
 
     @asyncio.coroutine
     def _post_response(self, request):
@@ -40,12 +45,12 @@ class Surveyor:
         data = yield from request.post()
         yield from self._survey.store_response(participant_id, data)
         body = yield from self._survey.get_item(participant_id)
-        return web.Response(status=201, body=body.encode('utf-8'))
+        return self._html_response(body, status=201)
 
     @asyncio.coroutine
     def _get_raw_results(self, request):
         body = yield from self._survey.get_raw_results()
-        return web.Response(body=body.encode('utf-8'))
+        return self._html_response(body)
 
 
 def run(survey):
