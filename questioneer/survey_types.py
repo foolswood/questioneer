@@ -143,6 +143,8 @@ class InterRater:
             '<h1>Participation</h1>',
             '<p>',
             'Total Responses: {}'.format(len(records)),
+            '<br/>',
+            'Total Participants: {}'.format(len(participant_counts)),
             '</p>',
             self._as_table(
                 ('No. Responses', 'No. Participants'),
