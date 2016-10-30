@@ -2,6 +2,8 @@ from os import listdir
 from os.path import join
 from asyncio import coroutine
 from uuid import uuid4
+from collections import Counter
+from operator import itemgetter
 import random
 
 
@@ -120,9 +122,28 @@ class InterRater:
         yield from self._persistence.store_response(
             participant_id, active_id, self._metric.validate(data))
 
+    @staticmethod
+    def _as_table(headings, records):
+        t_head = ' '.join('<th>{}</th>'.format(h) for h in headings)
+        t_body = '\n</tr>\n<tr>\n'.join(' '.join('<td>{}</td>'.format(d) for d in record) for record in records)
+        return table_template.format(headings=t_head, rows='<tr>\n{}\n</tr>'.format(t_body))
+
     @coroutine
     def get_raw_results(self):
         columns, records = yield from self._persistence.get_raw_results()
-        headings = ' '.join('<th>{}</th>'.format(c) for c in columns)
-        body = '\n</tr>\n<tr>\n'.join(' '.join('<td>{}</td>'.format(d) for d in record) for record in records)
-        return table_template.format(headings=headings, rows='<tr>\n{}\n</tr>'.format(body))
+        return self._as_table(columns, records)
+
+    @coroutine
+    def get_summary(self):
+        columns, records = yield from self._persistence.get_raw_results()
+        pid_idx = columns.index('participant_id')
+        participant_counts = Counter(map(itemgetter(pid_idx), records))
+        participant_cc = Counter(participant_counts.values())
+        return '\n'.join((
+            '<h1>Participation</h1>',
+            '<p>',
+            'Total Responses: {}'.format(len(records)),
+            '</p>',
+            self._as_table(
+                ('No. Responses', 'No. Participants'),
+                sorted(participant_cc.items()))))
