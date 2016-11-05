@@ -2,8 +2,8 @@ from os import listdir
 from os.path import join
 from asyncio import coroutine
 from uuid import uuid4
-from collections import Counter
-from operator import itemgetter
+from collections import Counter, defaultdict, namedtuple
+from operator import attrgetter
 import random
 
 
@@ -133,13 +133,26 @@ class InterRater:
         columns, records = yield from self._persistence.get_raw_results()
         return self._as_table(columns, records)
 
+    @staticmethod
+    def _as_namedtuples(columns, records):
+        NT = namedtuple('Record', columns)
+        return tuple(NT(*r) for r in records)
+
     @coroutine
     def get_summary(self):
-        columns, records = yield from self._persistence.get_raw_results()
-        pid_idx = columns.index('participant_id')
-        participant_counts = Counter(map(itemgetter(pid_idx), records))
+        records = self._as_namedtuples(*(
+            yield from self._persistence.get_raw_results()))
+        item_responses = defaultdict(list)
+        for record in records:
+            item_responses[record.active_item_id].append(record)
+        participant_counts = Counter(map(attrgetter('participant_id'), records))
         participant_cc = Counter(participant_counts.values())
         return '\n'.join((
+            '<h1>Results</h1>',
+            self._as_table(
+                ('Item', 'No. Responses'),
+                sorted((aii, len(air)) for aii, air in
+                item_responses.items())),
             '<h1>Participation</h1>',
             '<p>',
             'Total Responses: {}'.format(len(records)),
