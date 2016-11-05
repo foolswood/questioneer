@@ -5,59 +5,84 @@ metric:
     options:
       - name: 'none'
         description: 'None of these'
+        value: 0
       - name: 'infections'
         description: 'Frequent or increasing lower respiratory infections'
+        value: 1
       - name: 'picu'
         description: 'PICU admission for lower respiratory infection'
+        value: 2
       - name: 'oxygen'
         description: 'Requirement for long term oxygen or non-invasive ventilation at home'
+        value: 3
       - name: 'ventilation'
         description: 'Tracheostomy and/or 24 hour ventilation'
+        value: 4
   - name: 'Feeding'
     options:
       - name: 'none'
         description: 'None of these'
+        value: 0
       - name: 'gastrostomy'
         description: 'Gastrostomy/long term NG feeding (>6 months)'
+        value: 1
       - name: 'jejunostomy'
         description: 'Jejunostomy or severe uncontrolled reflux despite maximum treatment'
+        value: 2
       - name: 'loss'
         description: 'Losing weight or unable to administer essential medication due to feeding difficulties'
+        value: 3
       - name: 'parenteral'
         description: 'Pain/distress associated with feeding, causing progressive feed reduction or requirement for total parenteral nutrition'
+        value: 4
   - name: 'Locomotor'
     options:
       - name: 'none'
         description: 'None of these'
+        value: 0
       - name: 'quadriplegia'
         description: 'Whole body movement disorder/quadriplegia/myopathy'
+        value: 1
       - name: 'scoliosis'
         description: 'Fixed scoliosis/GMFCS Level V'
+        value: 2
       - name: 'gmfcs'
         description: 'GMFCS Level V equivalent with dystonia/no voluntary movement'
+        value: 3
       - name: 'inoperable'
         description: 'Difficulty with maintaining comfort in seating e.g. inoperable progressive scoliosis, intractable dystonic pain, pressure sores etc.'
+        value: 4
   - name: 'Seizures'
     options:
       - name: 'none'
         description: 'None of these'
+        value: 0
       - name: 'meds'
         description: 'Epilepsy requiring medication'
+        value: 1
       - name: 'threemeds'
         description: 'Poor seizure control despite at least three regular medications'
+        value: 2
       - name: 'rescue'
         description: 'Frequent use of rescue medication (most days)'
+        value: 3
       - name: 'intensive'
         description: 'Episodes of status epilepticus requiring intensive treatment (IV infusions/PICU) or for which these are seen as futile'
+        value: 4
   - name: 'Other interventions'
     options:
       - name: 'none'
         description: 'None of these'
+        value: 0
       - name: 'stoma'
         description: 'Stoma/Insulin or clotting factor dependent'
+        value: 1
       - name: 'indwell'
         description: 'Indwelling central access/long term urinary catheterisation/VP shunt/awaiting cardiac or neurosurgery'
+        value: 2
       - name: 'transplant'
         description: 'Organ transplant/Dialysis/Intra-ventricular medication'
+        value: 3
       - name: 'shunt'
         description: 'VP shunt requiring frequent revision'
+        value: 4

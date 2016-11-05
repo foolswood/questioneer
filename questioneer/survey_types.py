@@ -6,6 +6,8 @@ from collections import Counter, defaultdict, namedtuple
 from operator import attrgetter
 import random
 
+from .krippendorffs_alpha import alpha
+
 
 html_page_template = '''
 <html>
@@ -138,17 +140,31 @@ class InterRater:
         NT = namedtuple('Record', columns)
         return tuple(NT(*r) for r in records)
 
+    def _get_score(self, record):
+        return sum(q.value(getattr(record, q.var)) for q in self._metric.questions)
+
     @coroutine
     def get_summary(self):
         records = self._as_namedtuples(*(
             yield from self._persistence.get_raw_results()))
         item_responses = defaultdict(list)
         for record in records:
-            item_responses[record.active_item_id].append(record)
+            item_responses[record.active_item_id].append(self._get_score(record))
+        mx = sum(max(list(q._option_values.values())) for q in self._metric.questions)
+        mn = sum(min(list(q._option_values.values())) for q in self._metric.questions)
+        try:
+            print(mn, mx, list(item_responses.values()))
+            a = alpha(
+                lambda a, b: (a - b) ** 2,
+                set(range(mn, mx)),
+                list(item_responses.values()))
+        except ZeroDivisionError:
+            a = 'Insufficient data'
         participant_counts = Counter(map(attrgetter('participant_id'), records))
         participant_cc = Counter(participant_counts.values())
         return '\n'.join((
             '<h1>Results</h1>',
+            "<p>Krippendorff's Alpha: {}</p>".format(a),
             self._as_table(
                 ('Item', 'No. Responses'),
                 sorted((aii, len(air)) for aii, air in

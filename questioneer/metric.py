@@ -19,6 +19,11 @@ class Choice:
             tuple(o['name'] for o in options))
         self._option_descriptions = {
             self.options[o['name']]: o['description'] for o in options}
+        self._option_values = {
+            o['name']: o['value'] for o in options}
+
+    def value(self, option):
+        return self._option_values[option]
 
     def validate(self, response):
         return self.options[response]
