@@ -153,7 +153,6 @@ class InterRater:
         mx = sum(max(list(q._option_values.values())) for q in self._metric.questions)
         mn = sum(min(list(q._option_values.values())) for q in self._metric.questions)
         try:
-            print(mn, mx, list(item_responses.values()))
             a = alpha(
                 lambda a, b: (a - b) ** 2,
                 set(range(mn, mx)),
