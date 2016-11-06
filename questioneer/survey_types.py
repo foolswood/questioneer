@@ -165,8 +165,8 @@ class InterRater:
             '<h1>Results</h1>',
             "<p>Krippendorff's Alpha: {}</p>".format(a),
             self._as_table(
-                ('Item', 'No. Responses'),
-                sorted((aii, len(air)) for aii, air in
+                ('Item', 'No. Responses', 'Min', 'Max'),
+                sorted((aii, len(air), min(air), max(air)) for aii, air in
                 item_responses.items())),
             '<h1>Participation</h1>',
             '<p>',
